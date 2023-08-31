@@ -2,13 +2,10 @@ import allTasks.Epic;
 import allTasks.Status;
 import allTasks.Subtask;
 import allTasks.Task;
-
-import java.util.HashMap;
-
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager(new HashMap<>(), new HashMap<>(), new HashMap<>());
+        TaskManager manager = new TaskManager();
 
         Epic epic = new Epic("Епик", "Ек макарек");
         Subtask subtask1 = new Subtask("Саб таск 1", "опять 25", 1);
@@ -29,21 +26,28 @@ public class Main {
         manager.addTask(task2);
 
         System.out.println(manager.getAllTasks());
+        System.out.println();
 
         Subtask subtaskUpd1 = new Subtask("Саб таск 2", "я в шоке", 1);
         Subtask subtaskUpd2 = new Subtask("Саб таск 3", "я в шоке333", 4);
-        Task taskUpd2 = new Task("Name2", "Description2");
+        subtaskUpd1.setStatus(Status.DONE);
+        Task taskUpd2 = new Task("Name222", "Description2");
+        taskUpd2.setStatus(Status.IN_PROGRESS);
         manager.updateTask(7, taskUpd2);
-        manager.updateSubtask(3 ,subtaskUpd1);
+        manager.updateSubtask(3, subtaskUpd1);
         manager.updateSubtask(5, subtaskUpd2);
 
         System.out.println(manager.getAllTasks());
+        System.out.println();
 
-          manager.removeEpic(1);
-          manager.removeTask(6);
-          System.out.println(manager.getAllTasks());
+        manager.removeSubtask(2);
+        manager.removeEpic(4);
+        manager.removeTask(7);
 
-          manager.clearAllTasks();
+        System.out.println(manager.getAllTasks());
+        System.out.println();
+
+        manager.clearAllTasks();
         System.out.println(manager.getAllTasks());
     }
 }

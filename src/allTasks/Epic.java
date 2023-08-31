@@ -39,12 +39,20 @@ public class Epic extends Task {
         }
     }
 
+    public void addSubtask(int SubtaskId) {
+        subtasksIds.add(SubtaskId);
+    }
+
+    public void removeSubtask(int SubtaskId) {
+        subtasksIds.remove(Integer.valueOf(SubtaskId));
+    }
+
     @Override
     public String toString() {
-        return "allTasks.Epic{" +
-                "title='" + getTitle() + '\'' +
+        return "Epic{" +
+                "id=" + getId() + '\'' +
+                ", title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
                 ", status=" + getStatus() + '\'' +
                 ", subtasksIds=" + subtasksIds +
                 '}';
