@@ -5,7 +5,7 @@ import allTasks.Task;
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getDefault();
 
         Epic epic = new Epic("Епик", "Ек макарек");
         Subtask subtask1 = new Subtask("Саб таск 1", "опять 25", 1);
@@ -13,6 +13,11 @@ public class Main {
         manager.addEpic(epic);
         manager.addSubtask(subtask1);
         manager.addSubtask(subtask2);
+        manager.getEpicById(1);
+        System.out.println(manager.getHistoryFromInMemoryTaskManager());
+        manager.getSubtaskById(2);
+        manager.getSubtaskById(3);
+        System.out.println(manager.getHistoryFromInMemoryTaskManager());
 
         Epic epic1 = new Epic("Епик1", "Ек макарек1");
         manager.addEpic(epic1);
