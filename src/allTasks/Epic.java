@@ -1,6 +1,7 @@
 package allTasks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtasksIds;

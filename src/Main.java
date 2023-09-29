@@ -17,7 +17,10 @@ public class Main {
         System.out.println(manager.getHistoryFromInMemoryTaskManager());
         manager.getSubtaskById(2);
         manager.getSubtaskById(3);
+        manager.getSubtaskById(2);
         System.out.println(manager.getHistoryFromInMemoryTaskManager());
+//        manager.removeEpic(1);
+//        System.out.println(manager.getHistoryFromInMemoryTaskManager());
 
         Epic epic1 = new Epic("Епик1", "Ек макарек1");
         manager.addEpic(epic1);
