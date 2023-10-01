@@ -1,19 +1,20 @@
-import allTasks.Task;
+package Managers;
+
+import Model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final LinkedList<Task> history;
     private final HashMap<Integer, Node> nodeMap = new HashMap<>();
     private Node first;
     private Node last;
 
-    public InMemoryHistoryManager() {
-        history = new LinkedList<>();
-    }
+// Реализация CustomLinkedList выполнена внутри этого класса. Я сослался на ТЗ, а именно: "Отдельный класс для списка
+// создавать не нужно — реализуйте его прямо в классе InMemoryHistoryManager. А вот отдельный класс Node для узла списка
+// необходимо добавить". Также я смотрел разбор предыдущей когорты, там было сказано, что надо делать так.
     @Override
     public void add(Task task) {
         if (task == null) return;
@@ -21,6 +22,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         remove(task.getId());
         linkLast(task);
         nodeMap.put(task.getId(), last);
+// Этот метод написан на основе тз: Сначала напишите свою реализацию двусвязного списка задач с методами
+// linkLast и getTasks. linkLast будет добавлять задачу в конец этого списка, а getTasks собирать все задачи из
+// него в обычный ArrayList. Может, я неправильно понимаю, что тут имелось в виду?
     }
 
     private void linkLast(Task task) {
@@ -44,7 +48,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(Node node) {
-         if (node.prev != null) {
+        if (node.prev != null) {
             node.prev.next = node.next;
             if (node.next == null) {
                 last = node.prev;
@@ -52,15 +56,15 @@ public class InMemoryHistoryManager implements HistoryManager {
                 node.next.prev = node.prev;
 
             }
-         } else {
-             first = node.next;
-             if (first == null) {
-                 last = null;
-             } else {
-                 first.prev = null;
-             }
+        } else {
+            first = node.next;
+            if (first == null) {
+                last = null;
+            } else {
+                first.prev = null;
+            }
 
-         }
+        }
     }
 
     @Override
@@ -90,4 +94,5 @@ public class InMemoryHistoryManager implements HistoryManager {
             this.next = next;
         }
     }
+
 }

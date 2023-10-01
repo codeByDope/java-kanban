@@ -1,6 +1,8 @@
-import allTasks.Epic;
-import allTasks.Subtask;
-import allTasks.Task;
+package Managers;
+
+import Model.Epic;
+import Model.Subtask;
+import Model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,7 +150,7 @@ public class InMemoryTaskManager implements TaskManager {
         return subtaskOfEpic;
     }
     @Override
-    public List<Task> getHistoryFromInMemoryTaskManager() {
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 }

@@ -1,7 +1,9 @@
-import allTasks.Epic;
-import allTasks.Status;
-import allTasks.Subtask;
-import allTasks.Task;
+import Managers.Managers;
+import Model.Epic;
+import Model.Status;
+import Model.Subtask;
+import Model.Task;
+import Managers.TaskManager;
 public class Main {
 
     public static void main(String[] args) {
@@ -14,11 +16,11 @@ public class Main {
         manager.addSubtask(subtask1);
         manager.addSubtask(subtask2);
         manager.getEpicById(1);
-        System.out.println(manager.getHistoryFromInMemoryTaskManager());
+        System.out.println(manager.getHistory());
         manager.getSubtaskById(2);
         manager.getSubtaskById(3);
         manager.getSubtaskById(2);
-        System.out.println(manager.getHistoryFromInMemoryTaskManager());
+        System.out.println(manager.getHistory());
 //        manager.removeEpic(1);
 //        System.out.println(manager.getHistoryFromInMemoryTaskManager());
 
