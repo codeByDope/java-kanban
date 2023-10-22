@@ -21,8 +21,6 @@ public class Main {
         manager.getSubtaskById(3);
         manager.getSubtaskById(2);
         System.out.println(manager.getHistory());
-//        manager.removeEpic(1);
-//        System.out.println(manager.getHistoryFromInMemoryTaskManager());
 
         Epic epic1 = new Epic("Епик1", "Ек макарек1");
         manager.addEpic(epic1);

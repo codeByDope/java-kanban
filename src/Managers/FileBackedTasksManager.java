@@ -158,23 +158,4 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         super.removeSubtask(id);
         save();
     }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        FileBackedTasksManager that = (FileBackedTasksManager) object;
-        //проверить таски
-        //проверить сабтаски
-        //проверить эпики
-        //проверить историю
-        boolean tasksEqual = this.getAllTasks().equals(that.getAllTasks());
-        boolean historyEqual = this.getHistory().equals(that.getHistory());
-        return tasksEqual && historyEqual;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file);
-    }
 }
