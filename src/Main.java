@@ -1,9 +1,9 @@
-import Managers.Managers;
-import Model.Epic;
-import Model.Status;
-import Model.Subtask;
-import Model.Task;
-import Managers.TaskManager;
+import managers.Managers;
+import model.Epic;
+import model.Status;
+import model.Subtask;
+import model.Task;
+import managers.TaskManager;
 public class Main {
 
     public static void main(String[] args) {

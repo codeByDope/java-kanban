@@ -1,10 +1,11 @@
-package Model;
+package model;
 
 public class Task {
     protected int id;
     protected final String title;
     protected final String description;
     protected Status status;
+    protected TaskType taskType;
     private static int count = 0;
 
     public Task(String title, String description) {
@@ -12,6 +13,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = Status.NEW;
+        this.taskType = TaskType.TASK;
     }
 
     public Task(int id, String title, String description, Status status) {
@@ -19,6 +21,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.taskType = TaskType.TASK;
     }
 
     public static void setCount(int count) {

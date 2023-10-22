@@ -1,38 +1,29 @@
-import Managers.FileBackedTasksManager;
-import Managers.Managers;
-import Model.Epic;
-import Model.Subtask;
-import Model.Task;
+import managers.FileBackedTasksManager;
+import managers.Managers;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 
 import java.io.File;
 
+import static managers.FileBackedTasksManager.loadFromFile;
+
 public class FileBackedManagerTest {
     public static void main(String[] args) {
-        File file = new File("src/Resources/FileBackedTasks.txt");
-
-        Epic epic = new Epic("Епик", "Ек макарек");
-        Subtask subtask1 = new Subtask("Саб таск 1", "опять 25", 1);
-        Task task = new Task("Task", "я в шоке");
-
-        FileBackedTasksManager tasksManager1 = Managers.getFileManager(file);
-        tasksManager1.addEpic(epic);
-        tasksManager1.addSubtask(subtask1);
-        tasksManager1.addTask(task);
-
-        tasksManager1.getTaskById(3);
-        tasksManager1.save();
-        tasksManager1.getSubtaskById(2);
-        tasksManager1.save();
-        System.out.println(tasksManager1.getAllTasks());
-
-        System.out.println(tasksManager1.getHistory());
-
-        System.out.println();
-
-        FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(file);
-
-        System.out.println(tasksManager2.getAllTasks());
-
-        System.out.println(tasksManager2.getHistory());
+        File file = new File("src/resources/FileBackedTasks.txt");
+        FileBackedTasksManager fileManager = new FileBackedTasksManager(file);
+        fileManager.addTask(new Task("task1", "Купить автомобиль"));
+        fileManager.addEpic(new Epic("new Epic1", "Новый Эпик"));
+        fileManager.addSubtask(new Subtask("New Subtask", "Подзадача", 2));
+        fileManager.addSubtask(new Subtask("New Subtask2", "Подзадача2", 2));
+        fileManager.getTaskById(1);
+        fileManager.getEpicById(2);
+        fileManager.getSubtaskById(3);
+        System.out.println(fileManager.getAllTasks());
+        System.out.println(fileManager.getHistory());
+        System.out.println("\n\n" + "new" + "\n\n");
+        FileBackedTasksManager fileBackedTasksManager = loadFromFile(file);
+        System.out.println(fileManager.getAllTasks());
+        System.out.println(fileBackedTasksManager.getHistory());
     }
 }

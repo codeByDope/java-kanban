@@ -1,8 +1,8 @@
-package Managers;
+package managers;
 
-import Model.Epic;
-import Model.Subtask;
-import Model.Task;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,17 +79,6 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ни-че-го");
             return null;
         }
-    }
-    public boolean isInTasks(int id) {
-        return tasks.containsKey(id);
-    }
-
-    public boolean isInEpics(int id) {
-        return epics.containsKey(id);
-    }
-
-    public boolean isInSubtasks(int id) {
-        return subtasks.containsKey(id);
     }
 
     public void addToHistoryById(int id) {
