@@ -14,6 +14,8 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Epic> epics;
     private final HistoryManager historyManager;
 
+    private StringBuilder gottenTasks;
+
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
         subtasks = new HashMap<>();
@@ -76,6 +78,27 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             System.out.println("Ни-че-го");
             return null;
+        }
+    }
+    public boolean isInTasks(int id) {
+        return tasks.containsKey(id);
+    }
+
+    public boolean isInEpics(int id) {
+        return epics.containsKey(id);
+    }
+
+    public boolean isInSubtasks(int id) {
+        return subtasks.containsKey(id);
+    }
+
+    public void addToHistoryById(int id) {
+        if (tasks.containsKey(id)) {
+            getTaskById(id);
+        } else if (epics.containsKey(id)) {
+            getEpicById(id);
+        } else if (subtasks.containsKey(id)) {
+            getSubtaskById(id);
         }
     }
 
@@ -152,5 +175,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
     }
 }

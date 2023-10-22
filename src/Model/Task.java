@@ -14,6 +14,20 @@ public class Task {
         this.status = Status.NEW;
     }
 
+    public Task(int id, String title, String description, Status status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
+    public static void setCount(int count) {
+        Task.count = count;
+    }
+    public static int getCount() {
+        return Task.count;
+    }
+
     private int generatedId() {
         return ++count;
     }

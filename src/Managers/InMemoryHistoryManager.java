@@ -12,19 +12,12 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node first;
     private Node last;
 
-// Реализация CustomLinkedList выполнена внутри этого класса. Я сослался на ТЗ, а именно: "Отдельный класс для списка
-// создавать не нужно — реализуйте его прямо в классе InMemoryHistoryManager. А вот отдельный класс Node для узла списка
-// необходимо добавить". Также я смотрел разбор предыдущей когорты, там было сказано, что надо делать так.
     @Override
     public void add(Task task) {
         if (task == null) return;
-
         remove(task.getId());
         linkLast(task);
         nodeMap.put(task.getId(), last);
-// Этот метод написан на основе тз: Сначала напишите свою реализацию двусвязного списка задач с методами
-// linkLast и getTasks. linkLast будет добавлять задачу в конец этого списка, а getTasks собирать все задачи из
-// него в обычный ArrayList. Может, я неправильно понимаю, что тут имелось в виду?
     }
 
     private void linkLast(Task task) {

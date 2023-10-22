@@ -1,0 +1,6 @@
+id,type,name,status,description,epic
+3,TASK,Task,NEW,я в шоке,
+1,EPIC,Епик,NEW,Ек макарек,
+2,SUBTASK,Саб таск 1,NEW,опять 25,1
+
+3,2
