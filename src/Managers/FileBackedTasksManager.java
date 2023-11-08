@@ -33,21 +33,21 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (allStrs.size() > 0) {
+            for (int i = 1; i < allStrs.size() - 2; i++) {
+                if (CSVFormatter.fromString(allStrs.get(i)) instanceof Subtask) {
+                    fileBackedTasksManager.addSubtask((Subtask) CSVFormatter.fromString(allStrs.get(i)));
+                } else if (CSVFormatter.fromString(allStrs.get(i)) instanceof Epic) {
+                    fileBackedTasksManager.addEpic((Epic) CSVFormatter.fromString(allStrs.get(i)));
+                } else {
+                    fileBackedTasksManager.addTask(CSVFormatter.fromString(allStrs.get(i)));
+                }
+            }
 
-        for (int i = 1; i < allStrs.size() - 2; i++) {
-            if (CSVFormatter.fromString(allStrs.get(i)) instanceof Subtask) {
-                fileBackedTasksManager.addSubtask((Subtask) CSVFormatter.fromString(allStrs.get(i)));
-            } else if (CSVFormatter.fromString(allStrs.get(i)) instanceof Epic) {
-                fileBackedTasksManager.addEpic((Epic) CSVFormatter.fromString(allStrs.get(i)));
-            } else {
-                fileBackedTasksManager.addTask(CSVFormatter.fromString(allStrs.get(i)));
+            for (int i : CSVFormatter.historyFromString(allStrs.get(allStrs.size() - 1))) {
+                fileBackedTasksManager.addToHistoryById(i);
             }
         }
-
-        for (int i : CSVFormatter.historyFromString(allStrs.get(allStrs.size() - 1))) {
-            fileBackedTasksManager.addToHistoryById(i);
-        }
-
         return fileBackedTasksManager;
 
     }

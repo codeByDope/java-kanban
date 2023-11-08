@@ -14,7 +14,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Epic> epics;
     private final HistoryManager historyManager;
 
-    private StringBuilder gottenTasks;
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -56,7 +55,6 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ни-че-го");
             return null;
         }
-
     }
 
     @Override
@@ -79,17 +77,6 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ни-че-го");
             return null;
         }
-    }
-    public boolean isInTasks(int id) {
-        return tasks.containsKey(id);
-    }
-
-    public boolean isInEpics(int id) {
-        return epics.containsKey(id);
-    }
-
-    public boolean isInSubtasks(int id) {
-        return subtasks.containsKey(id);
     }
 
     public void addToHistoryById(int id) {
@@ -126,7 +113,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(int id, Epic epic) {
+//        ArrayList subtasks = epics.get(id).getSubtasksIds();
         epic.setId(id);
+//        epic.setSubtasksIds(subtasks);
         epics.put(id, epic);
     }
 

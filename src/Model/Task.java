@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Task {
     protected int id;
     protected final String title;
@@ -24,6 +26,7 @@ public class Task {
     public static void setCount(int count) {
         Task.count = count;
     }
+
     public static int getCount() {
         return Task.count;
     }
@@ -56,6 +59,11 @@ public class Task {
         return description;
     }
 
+    public static void resetStatics() {
+
+        count = 0;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -64,5 +72,18 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Task task = (Task) object;
+        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && status == task.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, status);
     }
 }
