@@ -54,7 +54,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("id,type,name,status,description,epic");
+            writer.write("id,type,name,status,description,duration,startTime,epic");
             writer.newLine();
             for (Object o : getAllTasks()) {
                 writer.write(CSVFormatter.toString((Task) o));

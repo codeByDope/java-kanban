@@ -8,6 +8,7 @@ import Model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -262,6 +263,9 @@ public abstract class TaskManagerTest {
         subtasks.add(subtask1);
         subtasks.add(subtask2);
 
+        System.out.println(subtasks);
+        System.out.println(Arrays.toString(taskManager.getSubtasksOfEpic(taskManager.getEpicById(1)).toArray()));
+
         assertArrayEquals(taskManager.getSubtasksOfEpic(taskManager.getEpicById(1)).toArray(), subtasks.toArray());
     }
 
@@ -284,5 +288,45 @@ public abstract class TaskManagerTest {
         assertArrayEquals(history.toArray(), taskManager.getHistory().toArray());
     }
 
+    @Test
+    public void testGetPrioritizedTasks() {
+        Epic epic = new Epic(1, "Епик", "Ек макарек",Status.NEW,60, LocalDateTime.now());
+        Subtask subtask1 = new Subtask(2,"Саб таск 1", "опять 25", Status.NEW, 30, LocalDateTime.now().plusMinutes(90),1);
+        Subtask subtask2 = new Subtask(3,"Саб таск 52", "это второй", Status.NEW, 30, LocalDateTime.now().plusMinutes(60),1);
+        Task task1 = new Task("Name", "Description");
+        taskManager.addEpic(epic);
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+        taskManager.addTask(task1);
+
+        LinkedList<Task> tasksRight = new LinkedList<>();
+
+        tasksRight.add(epic);
+        tasksRight.add(subtask2);
+        tasksRight.add(subtask1);
+        tasksRight.add(task1);
+
+        assertArrayEquals(tasksRight.toArray(), taskManager.getPrioritizedTasks().toArray());
+    }
+
+    @Test
+    public void testGetPrioritizedTasksWithOverlaps() {
+        Epic epic = new Epic(1, "Епик", "Ек макарек",Status.NEW,60, LocalDateTime.now());
+        Subtask subtask1 = new Subtask(2,"Саб таск 1", "опять 25", Status.NEW, 30, LocalDateTime.now().plusMinutes(35),1);
+        Subtask subtask2 = new Subtask(3,"Саб таск 52", "это второй", Status.NEW, 30, LocalDateTime.now().plusMinutes(60),1);
+        Task task1 = new Task("Name", "Description");
+        taskManager.addEpic(epic);
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+        taskManager.addTask(task1);
+
+        LinkedList<Task> tasksRight = new LinkedList<>();
+
+        tasksRight.add(epic);
+        tasksRight.add(subtask2);
+        tasksRight.add(task1);
+
+        assertArrayEquals(tasksRight.toArray(), taskManager.getPrioritizedTasks().toArray());
+    }
 
 }

@@ -3,6 +3,7 @@ import Managers.Managers;
 import Model.Epic;
 import Model.Subtask;
 import Model.Task;
+import Managers.CSVFormatter;
 
 import java.io.File;
 
@@ -25,13 +26,13 @@ public class FileBackedManagerTest {
         tasksManager1.save();
         System.out.println(tasksManager1.getAllTasks());
         System.out.println(tasksManager1.getHistory());
-//
-//        System.out.println();
-//
-//        FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(file);
-//
-//        System.out.println(tasksManager2.getAllTasks());
-//
-//        System.out.println(tasksManager2.getHistory());
+
+        System.out.println();
+
+        FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(file);
+
+        System.out.println(tasksManager2.getAllTasks());
+
+        System.out.println(tasksManager2.getHistory());
     }
 }

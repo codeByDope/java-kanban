@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Task {
@@ -8,6 +10,8 @@ public class Task {
     protected final String description;
     protected Status status;
     private static int count = 0;
+    private long duration;
+    private LocalDateTime startTime;
 
     public Task(String title, String description) {
         id = generatedId();
@@ -21,6 +25,31 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+    }
+
+    public Task(int id, String title, String description, Status status, long duration, LocalDateTime startTime) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public long getDuration() {
+        return duration;
     }
 
     public static void setCount(int count) {
@@ -59,8 +88,11 @@ public class Task {
         return description;
     }
 
-    public static void resetStatics() {
+    public LocalDateTime getEndTime() {
+        return startTime.plusMinutes(duration);
+    }
 
+    public static void resetStatics() {
         count = 0;
     }
 
@@ -71,7 +103,18 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
                 '}';
+    }
+
+    public boolean hasTimeOverlap(Task otherTask) {
+        LocalDateTime startA = this.getStartTime();
+        LocalDateTime endA = this.getEndTime();
+        LocalDateTime startB = otherTask.getStartTime();
+        LocalDateTime endB = otherTask.getEndTime();
+
+        return startA.isBefore(endB) && endA.isAfter(startB);
     }
 
     @Override
