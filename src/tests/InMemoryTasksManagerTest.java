@@ -1,7 +1,7 @@
-package Tests;
+package tests;
 
-import Managers.Managers;
-import Managers.TaskManager;
+import managers.Managers;
+import managers.TaskManager;
 
 public class InMemoryTasksManagerTest extends TaskManagerTest{
     @Override

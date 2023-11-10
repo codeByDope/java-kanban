@@ -1,10 +1,10 @@
-package Tests;
+package tests;
 
-import Managers.TaskManager;
-import Model.Epic;
-import Model.Status;
-import Model.Subtask;
-import Model.Task;
+import managers.TaskManager;
+import model.Epic;
+import model.Status;
+import model.Subtask;
+import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

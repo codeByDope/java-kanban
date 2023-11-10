@@ -1,11 +1,10 @@
-package Managers;
+package managers;
 
-import Model.*;
+import model.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CSVFormatter {
@@ -78,8 +77,11 @@ public class CSVFormatter {
         String[] parts = str.split(",");
         List<Integer> result = new ArrayList<>();
         for (String e : parts) {
-            result.add(Integer.parseInt(e));
+            if (!e.isEmpty()) {
+                result.add(Integer.parseInt(e));
+            }
         }
         return result;
     }
+
 }

@@ -1,7 +1,6 @@
-package Model;
+package model;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Task {
@@ -11,6 +10,7 @@ public class Task {
     protected Status status;
     private static int count = 0;
     private long duration;
+    protected TaskType taskType;
     private LocalDateTime startTime;
 
     public Task(String title, String description) {
@@ -18,6 +18,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = Status.NEW;
+        this.taskType = TaskType.TASK;
     }
 
     public Task(int id, String title, String description, Status status) {
@@ -25,6 +26,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.taskType = TaskType.TASK;
     }
 
     public Task(int id, String title, String description, Status status, long duration, LocalDateTime startTime) {
@@ -32,6 +34,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.taskType = TaskType.TASK;
         this.duration = duration;
         this.startTime = startTime;
     }

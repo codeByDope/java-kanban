@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,16 +11,19 @@ public class Epic extends Task {
     public Epic(String title, String description) {
         super(title, description);
         subtasksIds = new ArrayList<>();
+        this.taskType = TaskType.EPIC;
     }
 
     public Epic(int id, String title, String description, Status status, long duration, LocalDateTime startTime) {
         super(id, title, description, status, duration, startTime);
         subtasksIds = new ArrayList<>();
+        this.taskType = TaskType.EPIC;
     }
 
     public Epic(int id, String title, String description, Status status) {
         super(id, title, description, status);
         subtasksIds = new ArrayList<>();
+        this.taskType = TaskType.EPIC;
     }
 
     public ArrayList<Integer> getSubtasksIds() {

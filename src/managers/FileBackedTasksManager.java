@@ -1,17 +1,16 @@
-package Managers;
+package managers;
 
-import Exceptions.ManagerSaveException;
-import Model.Epic;
-import Model.Subtask;
-import Model.Task;
+import exceptions.ManagerSaveException;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    private File file;
+    private final File file;
 
     @Override
     public ArrayList<Object> getAllTasks() {
@@ -33,7 +32,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (allStrs.size() > 0) {
+        if (!allStrs.isEmpty()) {
             for (int i = 1; i < allStrs.size() - 2; i++) {
                 if (CSVFormatter.fromString(allStrs.get(i)) instanceof Subtask) {
                     fileBackedTasksManager.addSubtask((Subtask) CSVFormatter.fromString(allStrs.get(i)));
@@ -52,7 +51,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     }
 
-    public void save() {
+    private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write("id,type,name,status,description,duration,startTime,epic");
             writer.newLine();
@@ -93,22 +92,38 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        return super.getTaskById(id);
+        Task task = super.getTaskById(id);
+        if (task != null) {
+            save();
+        }
+        return task;
     }
 
     @Override
     public Epic getEpicById(int id) {
-        return super.getEpicById(id);
+        Epic epic =  super.getEpicById(id);
+        if (epic != null) {
+            save();
+        }
+        return epic;
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
-        return super.getSubtaskById(id);
+        Subtask subtask = super.getSubtaskById(id);
+        if (subtask != null) {
+            save();
+        }
+        return subtask;
     }
 
     @Override
     public ArrayList<Subtask> getSubtasksOfEpic(Epic epic) {
-        return super.getSubtasksOfEpic(epic);
+        ArrayList<Subtask> subtasks = super.getSubtasksOfEpic(epic);
+        if (subtasks != null) {
+            save();
+        }
+        return subtasks;
     }
 
     @Override

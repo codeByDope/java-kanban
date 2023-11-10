@@ -1,11 +1,11 @@
-package Tests;
+package tests;
 
-import Managers.Managers;
-import Managers.FileBackedTasksManager;
-import Managers.TaskManager;
-import Model.Epic;
-import Model.Subtask;
-import Model.Task;
+import managers.Managers;
+import managers.FileBackedTasksManager;
+import managers.TaskManager;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +56,6 @@ public class FileBackedTasksManagerTest extends TaskManagerTest {
 
         fileBackedTasksManager.getTaskById(3);
         fileBackedTasksManager.getSubtaskById(2);
-        fileBackedTasksManager.save();
 
         FileBackedTasksManager fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(file);
 

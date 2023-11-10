@@ -1,9 +1,9 @@
-package Managers;
+package managers;
 
-import Exceptions.ManagerSaveException;
-import Model.Epic;
-import Model.Subtask;
-import Model.Task;
+import exceptions.ManagerSaveException;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 import java.time.LocalDateTime;
 import java.util.*;
 

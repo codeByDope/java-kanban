@@ -1,7 +1,7 @@
-package Tests;
+package tests;
 
-import Managers.InMemoryHistoryManager;
-import Model.Task;
+import managers.InMemoryHistoryManager;
+import model.Task;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
