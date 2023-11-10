@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtasksIds;
-    LocalDateTime endTime;
 
     public Epic(String title, String description) {
         super(title, description);
@@ -62,7 +61,7 @@ public class Epic extends Task {
         subtasksIds.remove(Integer.valueOf(SubtaskId));
     }
 
-    public void getEpicDuration(ArrayList<Subtask> subtasks) {
+    public void setEpicDuration(ArrayList<Subtask> subtasks) {
         long duration = 0;
         for (Subtask subtask: subtasks) {
             duration += subtask.getDuration();
