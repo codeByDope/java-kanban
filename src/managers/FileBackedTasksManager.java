@@ -60,7 +60,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 writer.newLine();
             }
             writer.newLine();
-            writer.write(CSVFormatter.historyToString(getHistoryManager()));
+            writer.write(CSVFormatter.historyToString(historyManager));
         } catch (IOException e) {
             throw new RuntimeException(new ManagerSaveException("Ошибка сохранения ", e));
         }

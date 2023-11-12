@@ -9,9 +9,9 @@ public class Task {
     protected final String description;
     protected Status status;
     private static int count = 0;
-    private long duration;
+    protected long duration;
     protected TaskType taskType;
-    private LocalDateTime startTime;
+    protected LocalDateTime startTime;
 
     public Task(String title, String description) {
         id = generatedId();

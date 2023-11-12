@@ -321,7 +321,6 @@ public abstract class TaskManagerTest {
         taskManager.addTask(task1);
 
         LinkedList<Task> tasksRight = new LinkedList<>();
-
         tasksRight.add(epic);
         tasksRight.add(subtask2);
         tasksRight.add(task1);
@@ -329,4 +328,21 @@ public abstract class TaskManagerTest {
         assertArrayEquals(tasksRight.toArray(), taskManager.getPrioritizedTasks().toArray());
     }
 
+    @Test
+    public void testGetPrioritizedTasksWithTwoOverlaps() {
+        Epic epic = new Epic(1, "Епик", "Ек макарек",Status.NEW,60, LocalDateTime.now());
+        Subtask subtask1 = new Subtask(2,"Саб таск 1", "опять 25", Status.NEW, 30, LocalDateTime.now().plusMinutes(35),1);
+        Subtask subtask2 = new Subtask(3,"Саб таск 52", "это второй", Status.NEW, 30, LocalDateTime.now().plusMinutes(40),1);
+        Task task1 = new Task("Name", "Description");
+        taskManager.addEpic(epic);
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+        taskManager.addTask(task1);
+
+        LinkedList<Task> tasksRight = new LinkedList<>();
+        tasksRight.add(epic);
+        tasksRight.add(task1);
+
+        assertArrayEquals(tasksRight.toArray(), taskManager.getPrioritizedTasks().toArray());
+    }
 }

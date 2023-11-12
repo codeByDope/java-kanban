@@ -1,9 +1,10 @@
 package managers;
 
-import exceptions.ManagerSaveException;
+import exceptions.OverlapException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -12,7 +13,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks;
     private final HashMap<Integer, Subtask> subtasks;
     private final HashMap<Integer, Epic> epics;
-    private final HistoryManager historyManager;
+    protected final HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         allTasks = new TreeSet<>(Comparator.comparing(task -> task.getStartTime() != null ? task.getStartTime() : LocalDateTime.MAX));
@@ -50,39 +51,56 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        Task task = tasks.get(id);
-        if (task != null) {
-            historyManager.add(task);
-        } else {
-            System.out.println("Ни-че-го");
+        try {
+            Task task = tasks.get(id);
+            if (task != null) {
+                historyManager.add(task);
+                return task;
+            } else {
+                throw new NullPointerException("Task с ID " + id + " не найден");
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return task;
+
+
     }
 
     @Override
     public Epic getEpicById(int id) {
-        Epic epic = epics.get(id);
-        if (epic != null) {
-            historyManager.add(epic);
-        } else {
-            System.out.println("Ни-че-го");
+        try {
+            Epic epic = epics.get(id);
+            if (epic != null) {
+                historyManager.add(epic);
+                return epic;
+            } else {
+                throw new NullPointerException("Epic с ID " + id + " не найден");
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return epic;
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
-        Subtask subtask = subtasks.get(id);
-        if (subtask != null) {
-            historyManager.add(subtask);
-        } else {
-            System.out.println("Ни-че-го");
+        try {
+            Subtask subtask = subtasks.get(id);
+            if (subtask != null) {
+                historyManager.add(subtask);
+                return subtask;
+            } else {
+                throw new NullPointerException("Subtask с ID " + id + " не найден");
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return subtask;
     }
 
 
-    public void addToHistoryById(int id) {
+    protected void addToHistoryById(int id) {
         Task task = tasks.get(id);
         if (task != null) {
             historyManager.add(task);
@@ -95,7 +113,7 @@ public class InMemoryTaskManager implements TaskManager {
                 if (subtask != null) {
                     historyManager.add(subtask);
                 } else {
-                    System.out.println("Ни-че-го");
+                    throw new NullPointerException("Задача с ID " + id + " не найдена");
                 }
             }
         }
@@ -104,12 +122,13 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void addTask(Task task) {
         try {
-            tasks.put(task.getId(), task);
-            allTasks.add(task);
-            if (checkOverlaps()) throw new ManagerSaveException("Присутствуют пересечения");
-        } catch(ManagerSaveException e) {
-            tasks.remove(task);
-            allTasks.remove(task);
+            if (!checkOverlaps(task)) {
+                tasks.put(task.getId(), task);
+                allTasks.add(task);
+            } else {
+                throw new OverlapException("Присутствуют пересечения!");
+            }
+        } catch (OverlapException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -117,12 +136,13 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void addEpic(Epic epic) {
         try {
-            epics.put(epic.getId(), epic);
-            allTasks.add(epic);
-            if (checkOverlaps()) throw new ManagerSaveException("Присутствуют пересечения");
-        } catch(ManagerSaveException e) {
-            epics.remove(epic);
-            allTasks.remove(epic);
+            if (!checkOverlaps(epic)) {
+                epics.put(epic.getId(), epic);
+                allTasks.add(epic);
+            } else {
+                throw new OverlapException("Присутствуют пересечения!");
+            }
+        } catch (OverlapException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -130,14 +150,14 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void addSubtask(Subtask subtask) {
         try {
-            subtasks.put(subtask.getId(), subtask);
-            epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
-            allTasks.add(subtask);
-            if (checkOverlaps()) throw new ManagerSaveException("Присутствуют пересечения");
-        } catch(ManagerSaveException e) {
-            subtasks.remove(subtask);
-            epics.get(subtask.getEpicId()).removeSubtask(subtask.getId());
-            allTasks.remove(subtask);
+            if (!checkOverlaps(subtask)) {
+                subtasks.put(subtask.getId(), subtask);
+                epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
+                allTasks.add(subtask);
+            } else {
+                throw new OverlapException("Присутствуют пересечения!");
+            }
+        } catch (OverlapException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -216,15 +236,16 @@ public class InMemoryTaskManager implements TaskManager {
         return allTasks;
     }
 
-    public HistoryManager getHistoryManager() {
-        return historyManager;
-    }
+    private boolean checkOverlaps(Task newTask) {
 
-    public boolean checkOverlaps() {
         LinkedList<Task> tasks = new LinkedList<>(allTasks);
         tasks.removeIf(task -> task.getStartTime() == null);
-        for (int i = 0; i < tasks.size() - 1; i++) {
-            if (tasks.get(i).hasTimeOverlap(tasks.get(i+1))) return true;
+        if (newTask.getStartTime() != null) {
+            for (Task existingTask : tasks) {
+                if (existingTask.hasTimeOverlap(newTask)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
