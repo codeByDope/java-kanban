@@ -151,9 +151,14 @@ public class InMemoryTaskManager implements TaskManager {
     public void addSubtask(Subtask subtask) {
         try {
             if (!checkOverlaps(subtask)) {
+                Epic epicOfSubtask = epics.get(subtask.getEpicId());
                 subtasks.put(subtask.getId(), subtask);
                 epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
                 allTasks.add(subtask);
+                if (subtask.getStartTime() != null) {
+                    epicOfSubtask.setEpicStartTime(getSubtasksOfEpic(epicOfSubtask));
+                    epicOfSubtask.setEpicDuration(getSubtasksOfEpic(epicOfSubtask));
+                }
             } else {
                 throw new OverlapException("Присутствуют пересечения!");
             }
