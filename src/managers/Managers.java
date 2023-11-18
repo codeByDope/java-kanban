@@ -14,4 +14,8 @@ public class Managers {
     public static FileBackedTasksManager getFileManager(File file) {
         return new FileBackedTasksManager(file);
     }
+
+    public static FileBackedTasksManager getFileManagerWithLoad(File file) {
+        return new FileBackedTasksManager(file, true);
+    }
 }

@@ -43,4 +43,16 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
+    List<Task> getTasks();
+
+    List<Subtask> getSubtasks();
+
+    List<Epic> getEpics();
+
+    void removeAllTasks();
+
+    void removeAllSubtasks();
+
+    void removeAllEpics();
+
 }

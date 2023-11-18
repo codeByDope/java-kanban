@@ -21,6 +21,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         this.file = file;
     }
 
+    public FileBackedTasksManager(File file, boolean load) {
+        this.file = file;
+        loadFromFile(file);
+    }
+
     public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         List<String> allStrs = new ArrayList<>();
@@ -49,6 +54,24 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
         return fileBackedTasksManager;
 
+    }
+
+    @Override
+    public void removeAllTasks() {
+        super.removeAllTasks();
+        save();
+    }
+
+    @Override
+    public void removeAllSubtasks() {
+        super.removeAllSubtasks();
+        save();
+    }
+
+    @Override
+    public void removeAllEpics() {
+        super.removeAllEpics();
+        save();
     }
 
     private void save() {

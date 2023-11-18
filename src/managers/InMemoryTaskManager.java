@@ -237,6 +237,61 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
+    public List<Task> getTasks() {
+        List<Task> res = new ArrayList<>();
+        for (Task task: tasks.values()) {
+            res.add(getTaskById(task.getId()));
+        }
+        return res;
+    }
+
+    @Override
+    public List<Subtask> getSubtasks() {
+        List<Subtask> res = new ArrayList<>();
+        for (Subtask task: subtasks.values()) {
+            res.add(getSubtaskById(task.getId()));
+        }
+        return res;
+    }
+
+    @Override
+    public List<Epic> getEpics() {
+        List<Epic> res = new ArrayList<>();
+        for (Epic task: epics.values()) {
+            res.add(getEpicById(task.getId()));
+        }
+        return res;
+    }
+
+    @Override
+    public void removeAllTasks() {
+        for (Task task: tasks.values()) {
+            removeTask(task.getId());
+        }
+    }
+
+    @Override
+    public void removeAllSubtasks() {
+        for (Subtask subtask: subtasks.values()) {
+            removeSubtask(subtask.getId());
+        }
+    }
+
+    @Override
+    public void removeAllEpics() {
+        for (Epic epic: epics.values()) {
+            removeEpic(epic.getId());
+        }
+    }
+
+    public boolean isIdInAllTasks(int id) {
+        if (tasks.containsKey(id) || subtasks.containsKey(id) || epics.containsKey(id)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public TreeSet<Task> getPrioritizedTasks() {
         return allTasks;
     }
