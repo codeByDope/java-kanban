@@ -46,10 +46,8 @@ public class InMemoryHistoryManagerTest {
 
         assertEquals(1, history.size());
 
-        // Trying to remove a task that doesn't exist in the history
         historyManager.remove(999);
 
-        // The history should remain unchanged
         history = historyManager.getHistory();
         assertEquals(1, history.size());
     }
@@ -58,7 +56,6 @@ public class InMemoryHistoryManagerTest {
     public void testAddNullTask() {
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
-        // Adding a null task should not affect the history
         historyManager.add(null);
 
         List<Task> history = historyManager.getHistory();
