@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import managers.FileBackedTasksManager;
+import managers.HttpTaskManager;
 import managers.Managers;
 import model.Epic;
 import model.Status;
@@ -16,20 +17,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Optional;
 
 public class HttpTaskServer {
     private final HttpServer server;
     private final static int PORT = 8080;
-    private static FileBackedTasksManager manager;
+    private static HttpTaskManager manager;
     File file;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Gson gson = new Gson();
-        HttpTaskServer httpTaskServer = new HttpTaskServer();
+        HttpTaskServer httpTask = new HttpTaskServer();
         Epic epic = new Epic(1, "Епик", "Ек макарек", Status.NEW);
         Subtask subtask1 = new Subtask(2,"Саб таск 1", "опять 25", Status.NEW, 30, LocalDateTime.now().plusMinutes(90),1);
         Subtask subtask2 = new Subtask(3,"Саб таск 52", "это второй", Status.NEW, 30, LocalDateTime.now().plusMinutes(60),1);
@@ -40,11 +40,10 @@ public class HttpTaskServer {
         System.out.println(gson.toJson(task));
     }
 
-    public HttpTaskServer() throws IOException {
+    public HttpTaskServer() throws IOException, InterruptedException {
         server = HttpServer.create();
         file = new File("src/Resources/FileBackedTasks.txt");
-        manager = Managers.getFileManagerWithLoad(file);
-        manager = FileBackedTasksManager.loadFromFile(file);
+        manager = Managers.getHttpManager(URI.create("http://localhost:8078"));
 
         FileBackedTasksManager fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(file);
         server.bind(new InetSocketAddress(PORT), 0);

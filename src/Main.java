@@ -1,28 +1,38 @@
-import managers.InMemoryTaskManager;
-import managers.Managers;
-import managers.TaskManager;
+import clients.KVTaskClient;
+import managers.HttpTaskManager;
 import model.Epic;
-import model.Status;
 import model.Subtask;
 import model.Task;
+import servers.KVServer;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
-        TaskManager taskManager = Managers.getDefault();
-        LocalDateTime now = LocalDateTime.now();
-        Epic epic = new Epic(1, "Епик", "Ек макарек",Status.NEW);
-        Subtask subtask1 = new Subtask(2,"Саб таск 1", "опять 25", Status.NEW, 30, now.plusMinutes(90),1);
-        Subtask subtask2 = new Subtask(3,"Саб таск 52", "это второй", Status.NEW, 30, now.plusMinutes(60),1);
-        Task task1 = new Task("Name", "Description");
+    public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
+        new KVServer().start();
 
-        taskManager.addEpic(epic);
-        taskManager.addSubtask(subtask1);
-        taskManager.addSubtask(subtask2);
-        taskManager.addTask(task1);
+        HttpTaskManager manager = new HttpTaskManager(new URI("http://localhost:8078"));
 
-        System.out.println(Arrays.toString(taskManager.getPrioritizedTasks().toArray()));
+        Epic epic = new Epic("Епик", "Ек макарек");
+        Subtask subtask1 = new Subtask("Саб таск 1", "опять 25", 1);
+        Task task = new Task("Task", "я в шоке");
+
+        manager.addEpic(epic);
+        manager.addSubtask(subtask1);
+        manager.addTask(task);
+
+        System.out.println(manager.getTaskById(3));
+        System.out.println(manager.getSubtaskById(2));
+
+        System.out.println(manager.getHistory());
+
+        System.out.println(manager.getEpics());
+        System.out.println(manager.getSubtasks());
+        System.out.println(manager.getTasks());
+
+        HttpTaskManager manager2 = HttpTaskManager.loadFromServer(new URI("http://localhost:8078"));
     }
 }

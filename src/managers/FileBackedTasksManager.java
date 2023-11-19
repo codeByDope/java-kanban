@@ -21,11 +21,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public FileBackedTasksManager(File file, boolean load) {
-        this.file = file;
-        loadFromFile(file);
-    }
-
     public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         List<String> allStrs = new ArrayList<>();
@@ -74,7 +69,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
     }
 
-    private void save() {
+    protected void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write("id,type,name,status,description,duration,startTime,epic");
             writer.newLine();
@@ -152,7 +147,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     @Override
     public List<Task> getHistory() {
         return super.getHistory();
-
     }
 
     @Override

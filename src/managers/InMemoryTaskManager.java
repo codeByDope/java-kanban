@@ -153,7 +153,9 @@ public class InMemoryTaskManager implements TaskManager {
             if (!checkOverlaps(subtask)) {
                 Epic epicOfSubtask = epics.get(subtask.getEpicId());
                 subtasks.put(subtask.getId(), subtask);
-                epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
+                if (!epicOfSubtask.getSubtasksIds().contains(subtask.getId())) {
+                    epicOfSubtask.addSubtask(subtask.getId());
+                }
                 allTasks.add(subtask);
                 if (subtask.getStartTime() != null) {
                     epicOfSubtask.setEpicStartTime(getSubtasksOfEpic(epicOfSubtask));
@@ -238,29 +240,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getTasks() {
-        List<Task> res = new ArrayList<>();
-        for (Task task: tasks.values()) {
-            res.add(getTaskById(task.getId()));
-        }
-        return res;
+        return new ArrayList<>(tasks.values());
     }
 
     @Override
     public List<Subtask> getSubtasks() {
-        List<Subtask> res = new ArrayList<>();
-        for (Subtask task: subtasks.values()) {
-            res.add(getSubtaskById(task.getId()));
-        }
-        return res;
+        return new ArrayList<>(subtasks.values());
     }
 
     @Override
     public List<Epic> getEpics() {
-        List<Epic> res = new ArrayList<>();
-        for (Epic task: epics.values()) {
-            res.add(getEpicById(task.getId()));
-        }
-        return res;
+        return new ArrayList<>(epics.values());
     }
 
     @Override

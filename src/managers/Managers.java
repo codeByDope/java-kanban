@@ -1,6 +1,8 @@
 package managers;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 public class Managers {
     public static TaskManager getDefault() {
@@ -15,7 +17,7 @@ public class Managers {
         return new FileBackedTasksManager(file);
     }
 
-    public static FileBackedTasksManager getFileManagerWithLoad(File file) {
-        return new FileBackedTasksManager(file, true);
+    public static HttpTaskManager getHttpManager(URI uri) throws IOException, InterruptedException {
+        return new HttpTaskManager(uri);
     }
 }
