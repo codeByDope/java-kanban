@@ -17,11 +17,9 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

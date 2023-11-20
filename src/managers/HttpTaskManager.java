@@ -9,7 +9,6 @@ import model.Task;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Arrays;
 
 public class HttpTaskManager extends FileBackedTasksManager{
     private final KVTaskClient kvTaskClient;
