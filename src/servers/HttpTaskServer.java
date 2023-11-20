@@ -23,7 +23,6 @@ public class HttpTaskServer {
     private final HttpServer server;
     private final static int PORT = 8080;
     private static HttpTaskManager manager;
-    File file;
 
     public HttpTaskServer() throws IOException, InterruptedException {
         server = HttpServer.create();

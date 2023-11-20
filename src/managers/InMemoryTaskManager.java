@@ -255,21 +255,24 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllTasks() {
-        for (Task task: tasks.values()) {
+        Collection<Task> savedTasks = tasks.values();
+        for (Task task: savedTasks) {
             removeTask(task.getId());
         }
     }
 
     @Override
     public void removeAllSubtasks() {
-        for (Subtask subtask: subtasks.values()) {
+        Collection<Subtask> savedSubtasks = subtasks.values();
+        for (Subtask subtask: savedSubtasks) {
             removeSubtask(subtask.getId());
         }
     }
 
     @Override
     public void removeAllEpics() {
-        for (Epic epic: epics.values()) {
+        Collection<Epic> savedEpics = epics.values();
+        for (Epic epic: savedEpics) {
             removeEpic(epic.getId());
         }
     }
