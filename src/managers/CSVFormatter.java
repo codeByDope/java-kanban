@@ -67,7 +67,7 @@ public class CSVFormatter {
         for (Task e : manager.getHistory()) {
             result.append(e.getId()).append(",");
         }
-        if (result.length() > 0) {
+        if (!result.toString().isEmpty()) {
             result.deleteCharAt(result.length() - 1);
         }
         return result.toString();

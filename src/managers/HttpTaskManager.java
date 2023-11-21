@@ -12,7 +12,7 @@ import java.net.URI;
 
 public class HttpTaskManager extends FileBackedTasksManager{
     private final KVTaskClient kvTaskClient;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
     public HttpTaskManager(URI uri) throws IOException, InterruptedException {
         super(null);
         kvTaskClient = new KVTaskClient(uri.toString());

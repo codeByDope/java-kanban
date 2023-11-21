@@ -28,9 +28,6 @@ public class Epic extends Task {
     public ArrayList<Integer> getSubtasksIds() {
         return subtasksIds;
     }
-    public void setSubtasksIds(ArrayList subtasksIds) {
-        this.subtasksIds = subtasksIds;
-    }
 
     public void checkAndRefreshStatus(ArrayList<Subtask> subtasks) {
         int statusDoneCounter = 0;

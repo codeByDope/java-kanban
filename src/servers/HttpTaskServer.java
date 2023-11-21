@@ -71,7 +71,7 @@ public class HttpTaskServer {
             return "";
         }
 
-        private String handleRequest(String[] partsOfPath, String method, String id, String body) throws IOException {
+        private String handleRequest(String[] partsOfPath, String method, String id, String body) {
             String resource = getResourceFromPath(partsOfPath);
             switch (method) {
                 case "POST":
